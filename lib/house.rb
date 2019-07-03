@@ -10,4 +10,16 @@ class House
     @rooms << room
   end
 
+  def rooms_from_category(category)
+    categorized_rooms = @rooms.find_all do |room|
+      category == room.category
+    end
+  end
+
+  def area
+    room_areas = @rooms.map do |room|
+      room.area
+    end
+    room_areas.sum
+  end 
 end
