@@ -11,15 +11,11 @@ class House
   end
 
   def rooms_from_category(category)
-    categorized_rooms = @rooms.find_all do |room|
-      category == room.category
-    end
+    categorized_rooms = @rooms.find_all { |room| category == room.category }
   end
 
   def total_area
-    room_areas = @rooms.map do |room|
-      room.area
-    end
+    room_areas = @rooms.map { |room| room.area }
     room_areas.sum
   end
 
@@ -33,16 +29,9 @@ class House
 
   def rooms_sorted_by_category
     sorted_rooms = {}
-    room_categories = @rooms.map do |room|
-      room.category
-    end
+    room_categories = @rooms.map { |room| room.category }
     room_categories.uniq!
-    room_categories.each do |category|
-      sorted_rooms[category] = rooms_from_category(category)
-    end
+    room_categories.each { |category| sorted_rooms[category] = rooms_from_category(category) }
     sorted_rooms
   end
-
-
-
 end
