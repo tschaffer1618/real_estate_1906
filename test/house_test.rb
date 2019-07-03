@@ -40,12 +40,43 @@ class HouseTest < Minitest::Test
     assert_equal :basement, @house.rooms_from_category(:basement)[0].category
   end
 
-  def test_area
+  def test_total_area
     @house.add_room(@room_1)
     @house.add_room(@room_2)
     @house.add_room(@room_3)
     @house.add_room(@room_4)
-    assert_equal 1900, @house.area
+    assert_equal 1900, @house.total_area
   end
+
+  def test_price_per_square_foot
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+    assert_equal 210.53, @house.price_per_square_foot.round(2)
+  end
+
+  def test_rooms_sorted_by_area
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+    assert_equal @room_4, @house.rooms_sorted_by_area[0]
+    assert_equal @room_3, @house.rooms_sorted_by_area[1]
+    assert_equal @room_2, @house.rooms_sorted_by_area[2]
+    assert_equal @room_1, @house.rooms_sorted_by_area[3]
+  end
+
+  def test_rooms_sorted_by_category
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+    assert_equal [:bedroom, :living_room, :basement], @house.rooms_sorted_by_category.keys
+    assert_equal [@room_1, @room_2], @house.rooms_sorted_by_category[:bedroom]
+    assert_equal [@room_3], @house.rooms_sorted_by_category[:living_room]
+    assert_equal [@room_4], @house.rooms_sorted_by_category[:basement]
+  end
+
 
 end

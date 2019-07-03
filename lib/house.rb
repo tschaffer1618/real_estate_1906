@@ -16,10 +16,33 @@ class House
     end
   end
 
-  def area
+  def total_area
     room_areas = @rooms.map do |room|
       room.area
     end
     room_areas.sum
-  end 
+  end
+
+  def price_per_square_foot
+    @price.delete("$").to_f / total_area
+  end
+
+  def rooms_sorted_by_area
+    @rooms.sort { |a, b| b.area <=> a.area }
+  end
+
+  def rooms_sorted_by_category
+    sorted_rooms = {}
+    room_categories = @rooms.map do |room|
+      room.category
+    end
+    room_categories.uniq!
+    room_categories.each do |category|
+      sorted_rooms[category] = rooms_from_category(category)
+    end
+    sorted_rooms
+  end
+
+
+
 end
